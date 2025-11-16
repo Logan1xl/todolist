@@ -1,17 +1,17 @@
 # 📝 API TodoList - README
 
 ## 📋 Table des matières
-- [Description](#description)
-- [Technologies utilisées](#technologies-utilisées)
-- [Prérequis](#prérequis)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Lancer l'application](#lancer-lapplication)
-- [Architecture du projet](#architecture-du-projet)
-- [Documentation de l'API](#documentation-de-lapi)
-- [Exemples d'utilisation](#exemples-dutilisation)
+- [Description]
+- [Technologies utilisées]
+- [Prérequis]
+- [Installation]
+- [Configuration]
+- [Lancer l'application]
+- [Architecture du projet]
+- [Documentation de l'API]
+- [Exemples d'utilisation]
 - [Tests](#tests)
-- [Bonnes pratiques Git](#bonnes-pratiques-git)
+- [Bonnes pratiques Git]
 
 ---
 
@@ -83,7 +83,7 @@ mvn clean package
 java -jar target/todolist-1.0.0.jar
 ```
 
-L'application démarre sur : **http://localhost:8080**
+L'application démarre sur : **http://localhost:8088**
 
 ---
 
