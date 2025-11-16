@@ -1,0 +1,261 @@
+# 📝 API TodoList - README
+
+## 📋 Table des matières
+- [Description](#description)
+- [Technologies utilisées](#technologies-utilisées)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Lancer l'application](#lancer-lapplication)
+- [Architecture du projet](#architecture-du-projet)
+- [Documentation de l'API](#documentation-de-lapi)
+- [Exemples d'utilisation](#exemples-dutilisation)
+- [Tests](#tests)
+- [Bonnes pratiques Git](#bonnes-pratiques-git)
+
+---
+
+## 🎯 Description
+
+API REST CRUD complète pour la gestion d'une liste de tâches (TodoList) développée avec Spring Boot. 
+
+Cette API permet de :
+- ✅ Créer des tâches
+- 📖 Lire les tâches (toutes, par ID, par statut)
+- ✏️ Mettre à jour des tâches
+- 🗑️ Supprimer des tâches
+- 🔍 Rechercher des tâches par titre
+- 📊 Obtenir des statistiques
+
+---
+
+## 🛠️ Technologies utilisées
+
+- **Java 21**
+- **Spring Boot 3.5.7**
+- **Spring Data JPA**
+- **Hibernate**
+- **MySQL** (base de données principale)
+- **Maven** (gestion des dépendances)
+- **Jakarta Validation** (validation des données)
+
+---
+
+
+## ⚙️ Installation pour un dev frontend
+
+### 1. Cloner le repository
+
+```bash
+git clone https://github.com/logan1xl/todolist.git
+cd todolist
+```
+
+### 2. Créer la base de données MySQL
+
+```sql
+CREATE DATABASE todolist_db;
+```
+
+### 3. Configurer la base de données
+
+Éditez le fichier `src/main/resources/application.properties` :
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/todolist_db
+spring.datasource.username=votre_username
+spring.datasource.password=votre_mot_de_passe
+```
+
+
+## ▶️ Lancer l'application
+
+### Avec Maven
+
+```bash
+mvn spring-boot:run
+```
+
+### Avec Java
+
+```bash
+mvn clean package
+java -jar target/todolist-1.0.0.jar
+```
+
+L'application démarre sur : **http://localhost:8080**
+
+---
+
+## 📁 Architecture du projet
+
+```
+todolist-api/
+├── src/
+│   ├── main/
+│       ├── java/com/todolist/api/
+│       │   ├── controller/        # Contrôleurs REST
+│       │   │   └── TodoController.java
+│       │   ├── dto/               # Data Transfer Objects
+│       │   │   └── TodoDTO.java
+│       │   ├── entity/            # Entités JPA
+│       │   │   └── Todo.java
+│       │   ├── exception/         # Gestion des exceptions
+│       │   │   ├── ResourceNotFoundException.java
+│       │   │   └── GlobalExceptionHandler.java
+│       │   ├── repository/        # Repositories JPA
+│       │   │   └── TodoRepository.java
+│       │   ├── service/           # Logique métier
+│       │   │   └── TodoService.java
+│       │   └── TodoListApiApplication.java
+│       └── resources/
+│          └── application.properties
+│   
+├── pom.xml
+└── README.md
+```
+
+---
+
+## 📚 Documentation de l'API
+
+### Base URL
+```
+http://localhost:8080/api/todos
+```
+
+### Endpoints disponibles
+
+ GET `/api/todos`  Récupère toutes les tâches
+ GET  `/api/todos/{id}` Récupère une tâche par ID
+ POST  `/api/todos` Crée une nouvelle tâche TodoDTO (JSON)
+ PUT  `/api/todos/{id}` Met à jour une tâche TodoDTO (JSON)
+DELETE `/api/todos/{id}`  Supprime une tâche 
+GET  `/api/todos/status?terminee=true/false` Filtre par statut
+GET `/api/todos/search?titre=texte`  Recherche par titre 
+PATCH `/api/todos/{id}/complete` Marque comme terminée 
+GET  `/api/todos/statistics`  Obtient les statistiques
+
+---
+
+## 💡 Exemples d'utilisation
+
+### 1. Créer une tâche
+
+**Requête :**
+```bash
+POST http://localhost:8080/api/todos
+Content-Type: application/json
+
+{
+  "titre": "Faire les courses",
+  "description": "Acheter du lait, du pain et des œufs",
+  "terminee": false
+}
+```
+
+**Réponse (201 Created) :**
+```json
+{
+  "id": 1,
+  "titre": "Faire les courses",
+  "description": "Acheter du lait, du pain et des œufs",
+  "terminee": false,
+  "dateCreation": "2025-11-16T10:30:00",
+  "dateModification": "2025-11-16T10:30:00"
+}
+```
+
+### 2. Récupérer toutes les tâches
+
+**Requête :**
+```bash
+GET http://localhost:8080/api/todos
+```
+
+**Réponse (200 OK) :**
+```json
+[
+  {
+    "id": 1,
+    "titre": "Faire les courses",
+    "description": "Acheter du lait, du pain et des œufs",
+    "terminee": false,
+    "dateCreation": "2025-11-16T10:30:00",
+    "dateModification": "2025-11-16T10:30:00"
+  },
+  {
+    "id": 2,
+    "titre": "Réunion équipe",
+    "description": "Présentation du nouveau projet",
+    "terminee": true,
+    "dateCreation": "2025-11-15T14:00:00",
+    "dateModification": "2025-11-16T09:15:00"
+  }
+]
+```
+
+### 3. Mettre à jour une tâche
+
+**Requête :**
+```bash
+PUT http://localhost:8080/api/todos/1
+Content-Type: application/json
+
+{
+  "titre": "Faire les courses (urgent)",
+  "description": "Acheter du lait, du pain, des œufs et du fromage",
+  "terminee": false
+}
+```
+
+### 4. Marquer une tâche comme terminée
+
+**Requête :**
+```bash
+PATCH http://localhost:8080/api/todos/1/complete
+```
+
+### 5. Rechercher des tâches
+
+**Requête :**
+```bash
+GET http://localhost:8080/api/todos/search?titre=course
+```
+
+### 6. Filtrer par statut
+
+**Requête (tâches terminées) :**
+```bash
+GET http://localhost:8080/api/todos/status?terminee=true
+```
+
+**Requête (tâches non terminées) :**
+```bash
+GET http://localhost:8080/api/todos/status?terminee=false
+```
+
+### 7. Obtenir les statistiques
+
+**Requête :**
+```bash
+GET http://localhost:8080/api/todos/statistics
+```
+
+**Réponse :**
+```json
+{
+  "total": 10,
+  "terminees": 6,
+  "enCours": 4
+}
+```
+
+### 8. Supprimer une tâche
+
+**Requête :**
+```bash
+DELETE http://localhost:8080/api/todos/1
+```
+
+**Réponse (204 No Content)**
