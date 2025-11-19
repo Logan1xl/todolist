@@ -72,6 +72,7 @@ public class OpenAPIConfig {
                                 new Server()
                                         .url("https://test-api.todolist.com")
                                         .description("Serveur de test"))
-                        ));
+
+                        );
     }
 }
