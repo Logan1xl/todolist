@@ -30,7 +30,7 @@ import java.util.Map;
  *
  * La documentation Swagger est disponible à : http://localhost:8081/swagger-ui.html
  *
- * @author Wulfrid MBONGO 
+ * @author Wulfrid MBONGO
  * @version 1.0
  * @since 2025-11-16
  */
